@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EvaluacionP3JT.CarsDetailPageJT"
+             Title="CarsDetailPageJT">
+    <StackLayout>
+        <Label Text="{Binding SelectedCar.model}" />
+        <Button Text="Save Car" Command="{Binding SaveCarCommand}" />
+    </StackLayout>
+</ContentPage>

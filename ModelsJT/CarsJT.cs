@@ -9,7 +9,7 @@ namespace EvaluacionP3JT.ModelsJT
     public class CarsJT
     {
         public int city_mpg { get; set; }
-        public string clase { get; set; }
+        public string Class { get; set; }
         public int combination_mpg { get; set; }
         public int cylinders { get; set; }
         public double displacement { get; set; }

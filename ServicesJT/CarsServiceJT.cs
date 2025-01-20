@@ -4,34 +4,36 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace EvaluacionP3JT.ServicesJT
 {
-    public class CarsServiceJT
+    public class CarApiServiceJT
     {
-        public async Task<CarsJT> GetImage(DateTime dt)
+        private const string ApiUrl = "https://api.api-ninjas.com/v1/cars";
+        private const string ApiKey = "XYyK8LuhRBrMCAqzIp+yag==38uMSAcz4WMaJb49";
+
+        private readonly HttpClient _httpClient;
+
+        public CarApiServiceJT()
         {
-            CarsJT dto = null;
-            HttpResponseMessage response;
-            string requestUrl = $"https://api.api-ninjas.com/v1/cars?&api_key=XYyK8LuhRBrMCAqzIp+yag==38uMSAcz4WMaJb49";
-            try
+            _httpClient = new HttpClient();
+            _httpClient.DefaultRequestHeaders.Add("X-Api-Key", ApiKey);
+        }
+
+        public async Task<List<CarsJT>> GetCarsAsync(string model)
+        {
+            var url = $"{ApiUrl}?model={model}";
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
             {
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-                HttpClient client = new HttpClient();
-                response = await client.SendAsync(request);
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    string json = await response.Content.ReadAsStringAsync();
-                    dto = JsonConvert.DeserializeObject<CarsJT>(json);
-                }
+                throw new Exception($"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
             }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-                throw;
-            }
-            return dto;
+
+            var json = await response.Content.ReadAsStringAsync();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<CarsJT>>(json);
         }
     }
 
