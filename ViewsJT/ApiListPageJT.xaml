@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EvaluacionP3JT.SavedCarsPageJT"
-             Title="SavedCarsPageJT">
-    <StackLayout>
-        <ListView ItemsSource="{Binding SavedCars}">
+             x:Class="EvaluacionP3JT.ApiListPageJT"
+             Title="ApiListPageJT">
+    <StackLayout Padding="10">
+        <Entry Placeholder="Enter car model" Text="{Binding ModelInput}" />
+
+        <Button Text="Load Cars" Command="{Binding LoadCarsCommand}" />
+
+        <ListView ItemsSource="{Binding Cars}"
+                  ItemSelected="{Binding SelectCarCommand}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding model}" />

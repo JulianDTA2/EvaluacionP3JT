@@ -1,4 +1,5 @@
-﻿using EvaluacionP3JT.ViewModelJT;
+﻿using EvaluacionP3JT.ListPageJT;
+using EvaluacionP3JT.ViewModelJT;
 
 namespace EvaluacionP3JT
 {
@@ -7,10 +8,10 @@ namespace EvaluacionP3JT
         public App()
         {
             InitializeComponent();
-            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "cars.db3");
-            var carDatabase = new ServicesJT.CarDatabaseJT(dbPath);
 
-            MainPage = new NavigationPage(new ListPageJT(new ApiListViewModel(carDatabase)));
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "carjt.db3");
+            var carDatabase = new ServicesJT.CarDatabaseJT(dbPath);
+            var viewModel = new ApiListViewModelJT();
         }
     }
 }

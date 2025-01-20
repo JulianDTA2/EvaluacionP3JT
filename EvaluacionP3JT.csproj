@@ -65,13 +65,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="CarsDetailPageJT.xaml">
+	  <MauiXaml Update="ViewsJT\ApiListPageJT.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ListPageJT.xaml">
+	  <MauiXaml Update="ViewsJT\CarsDetailPageJT.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="SavedCarsPageJT.xaml">
+	  <MauiXaml Update="ViewsJT\SavedCarsPageJT.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

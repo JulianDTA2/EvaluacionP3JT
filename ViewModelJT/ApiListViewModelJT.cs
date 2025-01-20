@@ -1,20 +1,16 @@
 ﻿using EvaluacionP3JT.ModelsJT;
-using System;
-using System.Collections.Generic;
+using EvaluacionP3JT.ServicesJT;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
+
 namespace EvaluacionP3JT.ViewModelJT
 {
-    public class ApiListViewModel : INo
+    public class ApiListViewModelJT : BaseViewModelJT
     {
-        private readonly ServicesJT.CarApiServiceJT _carApiService;
-        private readonly ServicesJT.CarDatabaseJT _carDatabase;
-
+        private readonly CarApiServiceJT _carApiService;
         public ObservableCollection<CarsJT> Cars { get; set; } = new ObservableCollection<CarsJT>();
         private string _modelInput;
+        private CarsJT _selectedCar;
 
         public string ModelInput
         {
@@ -22,22 +18,29 @@ namespace EvaluacionP3JT.ViewModelJT
             set => SetProperty(ref _modelInput, value);
         }
 
+        public CarsJT SelectedCar
+        {
+            get => _selectedCar;
+            set => SetProperty(ref _selectedCar, value);
+        }
+
         public ICommand LoadCarsCommand { get; }
         public ICommand SelectCarCommand { get; }
+        public ICommand SaveCarCommand { get; }
 
-        public ApiListViewModel(ServicesJT.CarDatabaseJT carDatabase)
+        public ApiListViewModelJT()
         {
-            _carApiService = new ServicesJT.CarApiServiceJT();
-            _carDatabase = carDatabase;
+            _carApiService = new CarApiServiceJT();
             LoadCarsCommand = new Command(async () => await LoadCarsAsync());
-            SelectCarCommand = new Command<CarsJT>(async (car) => await SelectCarAsync(car));
+            SelectCarCommand = new Command(async () => await NavigateToCarDetailPage());
+            SaveCarCommand = new Command(async () => await SaveCarToDatabase());
         }
 
         private async Task LoadCarsAsync()
         {
             if (string.IsNullOrWhiteSpace(ModelInput))
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Por favor, ingresa un modelo", "OK");
+                await Application.Current.MainPage.DisplayAlert("Error", "Please enter a car model", "OK");
                 return;
             }
 
@@ -56,11 +59,20 @@ namespace EvaluacionP3JT.ViewModelJT
             }
         }
 
-        private async Task SelectCarAsync(CarsJT selectedCar)
+        private async Task NavigateToCarDetailPage()
         {
-            // Navegar a la siguiente pantalla y pasar el coche seleccionado
-            await Application.Current.MainPage.Navigation.PushAsync(new CarsDetailPageJT(selectedCar));
+            if (SelectedCar != null)
+            {
+                await Shell.Current.GoToAsync(nameof(CarsDetailPageJT)); 
+            }
+        }
+
+        private async Task SaveCarToDatabase()
+        {
+            if (SelectedCar != null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Success", "Car saved to database", "OK");
+            }
         }
     }
 }
-

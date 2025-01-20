@@ -19,13 +19,11 @@ namespace EvaluacionP3JT.ServicesJT
             _database.CreateTableAsync<CarsJT>().Wait();
         }
 
-        // Guardar un coche en la base de datos
         public Task<int> SaveCarAsync(CarsJT car)
         {
             return _database.InsertAsync(car);
         }
 
-        // Obtener todos los coches guardados
         public Task<List<CarsJT>> GetCarsAsync()
         {
             return _database.Table<CarsJT>().ToListAsync();

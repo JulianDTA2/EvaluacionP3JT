@@ -5,18 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using EvaluacionP3JT.ModelsJT;
 using System.Windows.Input;
+using EvaluacionP3JT.ViewModelJT;
 
 
-namespace EvaluacionP3JT.ViewModelJT
+namespace EvaluacionP3JT.ListPageJT
 {
-    public class CarDetailViewModel : BaseViewModel
+    public class CarDetailViewModelJT : BaseViewModelJT
     {
         private readonly ServicesJT.CarDatabaseJT _carDatabase;
 
         public CarsJT SelectedCar { get; set; }
         public ICommand SaveCarCommand { get; }
 
-        public CarDetailViewModel(ServicesJT.CarDatabaseJT carDatabase, CarsJT selectedCar)
+        public CarDetailViewModelJT(ServicesJT.CarDatabaseJT carDatabase, CarsJT selectedCar)
         {
             _carDatabase = carDatabase;
             SelectedCar = selectedCar;

@@ -5,5 +5,6 @@ public partial class CarsDetailPageJT : ContentPage
 	public CarsDetailPageJT()
 	{
 		InitializeComponent();
+
 	}
 }
